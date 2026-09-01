@@ -1,0 +1,28 @@
+name: Pipeline de CI e Seguranca DevSecOps
+
+# O pipeline será executado a cada 'git push' (salvamento) na branch principal
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  verificacao-e-build:
+    runs-on: ubuntu-latest # Roda em uma máquina virtual Linux limpa do GitHub
+
+    steps:
+    # Passo 1: Baixa o código do seu repositório para dentro da máquina virtual
+    - name: Baixar o codigo fonte
+      uses: actions/checkout@v4
+
+    # Passo 2: Escaneia o Dockerfile procurando brechas de segurança (Prática DevSecOps)
+    - name: Escanear Dockerfile (Hadolint)
+      uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: Dockerfile
+        failure-threshold: error # Interrompe o processo se achar um erro grave
+
+    # Passo 3: Tenta construir a imagem Docker para garantir que o código compila/funciona
+    - name: Construir imagem Docker de teste
+      run: |
+        docker build -t minha-api-devops:test .
+        echo "Sucesso! A imagem Docker foi gerada sem erros."
