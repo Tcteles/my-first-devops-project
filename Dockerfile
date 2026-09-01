@@ -1,4 +1,4 @@
-dockerfile# Imagem base otimizada e com menos pacotes expostos
+# Imagem base otimizada e com menos pacotes expostos
 FROM python:3.9-slim
 
 # Cria um grupo e um usuário comum sem privilégios administrativos
