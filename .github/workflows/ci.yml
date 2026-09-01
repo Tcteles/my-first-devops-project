@@ -12,7 +12,7 @@ jobs:
     steps:
     # Passo 1: Baixa o código do seu repositório para dentro da máquina virtual
     - name: Baixar o codigo fonte
-      uses: actions/checkout@v4.2.2
+      uses: actions/checkout@v4
 
     # Passo 2: Escaneia o Dockerfile procurando brechas de segurança (Prática DevSecOps)
     - name: Escanear Dockerfile (Hadolint)
