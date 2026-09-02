@@ -7,7 +7,8 @@ RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 WORKDIR /app
 
 # Instala a biblioteca garantindo a versão mais recente e segura
-RUN pip install --no-cache-dir flask==3.0.3
+# Instalamos o Flask e também o Gunicorn (servidor de produção)
+RUN pip install --no-cache-dir flask==3.0.3 gunicorn==23.0.0
 
 COPY app.py .
 
@@ -19,4 +20,6 @@ USER appuser
 
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+# Comancod antigo CMD ["gunicorn","python", "app.py"]
+# Mudamos o comando final! Agora quem inicia o app é o Gunicorn, de forma blindada
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
